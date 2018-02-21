@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	id="WebApp_ID" version="2.5">
+	<display-name>MobileAccessAPI</display-name>
+	<!-- <listener> <listener-class> org.springframework.web.context.ContextLoaderListener 
+		</listener-class> </listener> -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:applicationContext.xml</param-value>
+	</context-param>
+	<context-param>
+		<description>
+			The name of the session attribute where the Subject will be
+			populated on successful authentication. This parameter is
+			added as context parameter so as to use it in Tag through
+			pageContext.
+		</description>
+		<param-name>SessionSubject</param-name>
+		<param-value>SUBJECT</param-value>
+	</context-param>
+   <filter>
+		<filter-name>AuthenticationFilter</filter-name>
+		<filter-class>
+			com.actividentity.jaas.ftress.filters.AuthenticationFilter</filter-class>
+		<init-param>
+			<description>
+				Name of the properties file containing the rules for the
+				URL to Action mapping
+			</description>
+			<param-name>URLMappingFile</param-name>
+			<param-value>URLMapping.properties</param-value>
+		</init-param>
+		<init-param>
+			<param-name>SecurityDomain</param-name>
+			<param-value>SISDOMAIN</param-value>
+		</init-param>
+		<init-param>
+			<param-name>HIDAdminGroup</param-name>
+			<param-value>0</param-value>
+		</init-param>
+		<init-param>
+      			<param-name>AllowedGroupSuffix</param-name>
+      			<param-value>-A</param-value>
+    		</init-param>	
+	</filter> 
+	<filter-mapping>
+		<filter-name>AuthenticationFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>   
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<servlet>
+		<!-- technically, a JSP is a servlet -->
+		<servlet-name>logLevelChanger</servlet-name>
+		<jsp-file>logLevelChanger.jsp</jsp-file>
+	</servlet>	
+	<servlet>
+		<servlet-name>MobileAccessAPIServlet</servlet-name>
+		<servlet-class>com.sun.jersey.spi.spring.container.servlet.SpringServlet</servlet-class>		
+		<init-param>
+			<param-name>com.sun.jersey.config.property.packages</param-name>
+			<param-value>com.hidglobal.managedservices.resource,
+				com.hidglobal.managedservices.exceptionmapper,
+				org.codehaus.jackson.jaxrs.JacksonJaxbJsonProvider
+			</param-value>
+		</init-param>
+		<init-param>
+			<param-name>com.sun.jersey.api.json.POJOMappingFeature</param-name>
+			<param-value>true</param-value>
+		</init-param>
+		<init-param>
+			<param-name>com.sun.jersey.spi.container.ContainerRequestFilters</param-name>
+			<param-value>com.hidglobal.managedservices.security.MobileAccessAuthenticator</param-value>
+		</init-param>
+		<init-param>
+			<param-name>com.sun.jersey.spi.container.ContainerResponseFilters</param-name>
+			<param-value>com.hidglobal.managedservices.security.CacheControlFilter</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+        <servlet-name>logLevelChanger</servlet-name>
+        <url-pattern>/logLevelChanger.jsp</url-pattern>
+    </servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>MobileAccessAPIServlet</servlet-name>
+		<url-pattern>/*</url-pattern>
+	</servlet-mapping>
+</web-app>

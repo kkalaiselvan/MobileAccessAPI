@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- WARNING: Eclipse auto-generated file.
+              Any modifications will be overwritten.
+              To include a user specific buildfile here, simply create one in the same
+              directory with the processing instruction <?eclipse.ant.import?>
+              as the first entry and export the buildfile again. -->
+<project basedir="." default="build" name="MobileAccessAPI">
+    <property environment="env"/>
+    <property name="debuglevel" value="source,lines,vars"/>
+    <property name="target" value="1.6"/>
+    <property name="source" value="1.6"/>
+    <path id="EAR Libraries.libraryclasspath"/>
+    <path id="MobileAccessAPI.classpath">
+        <pathelement location="build/classes"/>
+        <fileset dir="WebContent/WEB-INF/lib">
+        	<include name="**/*.jar" />
+ 	</fileset>
+	</path>
+	 <path id="4tress_lib.classpath">
+        <pathelement location="build/classes"/>
+        <fileset dir="/opt/oauth/lib">
+        	<include name="**/*.jar" />
+ 	</fileset>
+    </path>
+    <target name="init">
+        <mkdir dir="build/classes"/>
+        <copy includeemptydirs="false" todir="build/classes">
+            <fileset dir="src">
+                <exclude name="**/*.java"/>
+                <exclude name="main/resources/"/>
+                <exclude name="resource/"/>
+            </fileset>
+        </copy>
+        <copy includeemptydirs="false" todir="build/classes">
+            <fileset dir="src/resource">
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="clean">
+        <delete dir="build/classes"/>
+    </target>
+    <target depends="clean" name="cleanall"/>
+    <target depends="build-subprojects,build-project" name="build"/>
+    <target name="build-subprojects"/>
+    <target depends="init" name="build-project">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="build/classes" includeantruntime="false" source="${source}" target="${target}">
+            <src path="src"/>
+            <src path="src/resource"/>
+            <exclude name="main/resources/"/>
+            <exclude name="resource/"/>
+            <classpath refid="MobileAccessAPI.classpath"/>
+			<classpath refid="4tress_lib.classpath"/>
+        </javac>
+    </target>
+    <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects"/>
+	<target name="war" description="Bundles the application as a WAR file" depends="clean, build">
+	    <mkdir dir="WebContent/WEB-INF/classes"/>
+	     
+	    <copy includeemptydirs="false" todir="WebContent/WEB-INF/classes">
+	            <fileset dir="build/classes">
+	            	<include name="**/*.class"/>
+	            </fileset>
+	    		<fileset dir="src">
+	    		     <include name="*.xml"/>
+			     <include name="*.xsd"/>
+	    		</fileset>
+	    		<fileset dir="src/resource">
+	    		   	  <include name="*.properties"/>
+				<include name="*.json"/>
+	    		 </fileset>
+	    </copy>
+		
+	    <war destfile="dist/MobileAccessAPI.war"
+	        basedir="WebContent"
+	        needxmlfile="false">
+	    </war>	
+	</target>
+	
+
+</project>

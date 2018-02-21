@@ -1,0 +1,329 @@
+<project name="Mobile Access API">
+	<taskdef name="xmltask" classname="com.oopsconsultancy.xmltask.ant.XmlTask"/>
+	<property file="jenkins.properties"/>
+	
+	<taskdef resource="net/sf/antcontrib/antlib.xml"/>
+
+	<!-- Properties From Jenkins Environment Variable -->
+	<property environment="env"/>
+	<property name="buildnumber" value="${env.BUILD_NUMBER}"/>
+	<property name="buildtag" value="${env.BUILD_TAG}"/>
+	<property name="newbuild" value="${env.NEW_BUILD}"/>
+
+	<!-- Time Stamp Task to get Current Date -->
+	<tstamp>
+        <format property="todaydate" pattern="MMddyyyy" locale="en"/>
+        <format property="todaylabel" pattern="MMddyyyy:HHmm" locale="en"/>
+    </tstamp>
+
+	<!-- Property for Code labeling -->
+
+	<property name="codelabel" value="${artifact}_${todaylabel}"/>
+	
+	<!-- Default Target for Test, Preprod and Prod -->
+	<target name="option">
+		<if>
+			<equals arg1="${env}" arg2="test"/>
+			<then>
+				<echo message="1:Deploy Latest Jenkins Artifact From ${preenv}"/>
+				<echo message="2.Build from Code Label in ${env}"/>
+				<echo message="3.Do a New Build for ${env}"/>
+				<echo message="4.Exit"/>
+				<switch value="${menu}">
+					<case value="1">
+						<echo message="##### Deploy Latest Jenkins Artifact From ${preenv} #####" />
+						<antcall target="testdeploy"/>
+					</case>
+					<case value="2">
+						<echo message="##### Deploy Artifact in ${env} from Label ${label} #####" />
+						<antcall target="testlabeldeploy"/>
+					</case>
+					<case value="3">
+						<echo message="##### New Build in ${env} #####" />
+						<antcall target="testbuilddeploy"/>
+					</case>
+					<case value="4">
+						<echo message="##### User Aborted the build #####"/>
+					</case>
+					<default>
+						<echo message="##### Enter A Valid Option #####"/>
+						<fail/>
+				</default>	
+				</switch>
+			</then>
+			<elseif>
+				<or>
+					<equals arg1="${env}" arg2="preprod"/>
+					<equals arg1="${env}" arg2="prod"/>
+				</or>
+				<then>
+					<echo message="1:Get Latest Jenkins Artifact From ${preenv}"/>
+					<echo message="2.Get Artifact from Label for ${env}"/>
+					<echo message="3.Do a New Build for ${env}"/>
+					<echo message="4.Exit"/>
+					<switch value="${menu}">
+						<case value="1">
+							<echo message="##### Get Latest Jenkins Artifact From ${preenv} #####" />
+							<antcall target="preprod"/>
+						</case>
+						<case value="2">
+							<echo message="##### Get Artifact from Label ${label} for ${env} #####" />
+							<antcall target="preprodlabel"/>
+						</case>
+						<case value="3">
+							<echo message="##### New Build for ${env} #####" />
+							<antcall target="preprodbuild"/>
+						</case>
+						<case value="4">
+							<echo message="##### User Aborted the build #####"/>
+						</case>
+						<default>
+							<echo message="##### Enter A Valid Option #####"/>
+							<fail/>
+						</default>	
+					</switch>
+				</then>
+			</elseif>	
+		</if>	
+	</target>
+	<!-- Master Targets -->
+	
+	<target name="devbuilddeploy" depends="war-build,undeploy,deploy" />
+    	<target name="devlabeldeploy" depends="getlabel,war-build,undeploy,deploy"/>
+    	<target name="testdeploy" depends="copy,replace_properties,undeploy,deploy,scm,label"/>
+    	<target name="testlabeldeploy" depends="getlabel,replace_properties,web_replace,war-build,undeploy,deploy,scm"/>
+    	<target name="testbuilddeploy" depends="get,replace_properties,web_replace,war-build,undeploy,deploy,scm,label"/>
+	<target name="preprod" depends="copy,replace_properties,scm"/>
+    	<target name="preprodlabel" depends="getlabel,replace_properties,web_replace,war-build,scm"/>
+    	<target name="preprodbuild" depends="get,replace_properties,web_replace,war-build,scm,label"/>
+	<target name="server" depends="stop,start"/>
+	
+	
+	<target name="web_replace">
+		<xmltask source="WebContent/WEB-INF/web.xml" dest="WebContent/WEB-INF/web.xml">
+		<replace path="//*[local-name()='web-app']//*[local-name()='filter']//*[local-name()='init-param'][*[local-name()='param-name']='HIDAdminGroup']//*[local-name()='param-value']//text()" 
+         withText="${HID_Admin_Group}"/> 
+		 </xmltask>
+
+	</target>
+	<target name="war-build">
+		<ant antfile="./build.xml" target="war"/>
+	</target>
+
+	<target name="replace_properties">
+		<replace dir="src/resource" summary="true">
+			<replacefilter token="${default_url}" value="${env_url}"/>
+		</replace>
+	</target>
+
+	<target name="undeploy">
+		<path id="wl.deploy.path">
+			<fileset file="${wlfullclient.location}"/>
+		</path>
+		<taskdef name="wldeploy" classname="weblogic.ant.taskdefs.management.WLDeploy">
+			<classpath refid="wl.deploy.path" />
+		</taskdef>
+		<wldeploy
+			action="undeploy" verbose="true" debug="true"
+			name="${artifact}"
+			user="${username}" password="${password}"
+			adminurl="${adminurl}" targets="${target_server}" failonerror="false" usenonexclusivelock="true">
+		</wldeploy>
+	</target>
+
+	<target name="deploy" depends="war-build,undeploy">
+		<path id="wl.deploy.path">
+			<fileset file="${wlfullclient.location}"/>
+		</path>
+		<taskdef name="wldeploy" classname="weblogic.ant.taskdefs.management.WLDeploy">
+			<classpath refid="wl.deploy.path" />
+		</taskdef>
+		<wldeploy
+			action="deploy" verbose="true" debug="true" upload="true"
+			name="${artifact}" source="dist/${artifact}.${artifact_type}"
+			user="${username}" password="${password}"
+			adminurl="${adminurl}" targets="${target_server}" usenonexclusivelock="true">
+		</wldeploy>
+	</target>
+	
+	<target name="copy">
+        <mkdir dir="./dist"/>
+		<copy file="${location}/${project}/dist/${artifact}.${artifact_type}" todir="./dist"/>
+    	</target>
+
+	<!-- Code Labeling -->
+	<target name="label">		
+		<if>
+			<or>
+				<equals arg1="${env}" arg2="test"/>
+				<equals arg1="${newbuild}" arg2="true"/>
+			</or>		
+			<then>
+				<!-- Code Labeling-->
+				<exec executable="bash" dir="/hidapp_build/u01/SurroundSCM/" osfamily="unix" failonerror="true">
+					<arg value="-c"/>
+					<arg value="sscm addlabel ${codelabel} -b${branch} -p${parent_scm} -d${buildtag} -y${scmusername}:${scmpassword} -z${server}"/>
+				</exec>
+			
+				<exec executable="bash" dir="/hidapp_build/u01/SurroundSCM/" osfamily="unix" failonerror="true">
+					<arg value="-c"/>
+					<arg value="sscm label ${repository_name} -b${branch} -p${parent_scm}/${coderepository} -l${codelabel} -r -c- -y${scmusername}:${scmpassword} -z${server}"/>
+				</exec>
+			</then>
+			<else>
+				<echo message="### Building from Label in ${env} or Getting Latest Artifact from ${preenv}###"/>
+			</else>
+		</if>
+	</target>
+	
+	<!-- Targets And Tasks Related to Checkin , Label of the Code and Artifact -->
+
+	<target name="createdaterepo">
+		<exec executable="bash" dir="/hidapp_build/u01/SurroundSCM/" osfamily="unix" failonerror="true">
+			<arg value="-c"/>
+			<arg value="sscm mkrepo ${todaydate} -b${parent_scm} -p${parent_scm}/${repository}/${env}/ -c- -y${scmusername}:${scmpassword} -z${server}"/>
+		</exec>
+	</target>
+
+	<target name="createsubrepo">
+		<exec executable="bash" dir="/hidapp_build/u01/SurroundSCM/" osfamily="unix" failonerror="true">
+			<arg value="-c"/>
+			<arg value="sscm mkrepo ${type} -b${parent_scm} -p${parent_scm}/${repository}/${env}/${todaydate} -c- -y${scmusername}:${scmpassword} -z${server}"/>
+		</exec>
+	</target>
+
+	<target name="add">
+		<exec executable="bash" dir="/hidapp_build/u01/SurroundSCM/" osfamily="unix" failonerror="true">
+			<arg value="-c"/>
+			<arg value="sscm add ${parent}/${env}/${todaydate}/${type}/${artifact}.${artifact_type} -b${parent_scm} -p${parent_scm}/${repository}/${env}/${todaydate}/${type} -c- -u  -y${scmusername}:${scmpassword} -z${server}"/>
+		</exec>
+	</target>
+
+	<target name="checkout">
+		<exec executable="bash" dir="/hidapp_build/u01/SurroundSCM/" osfamily="unix" failonerror="true">
+			<arg value="-c"/>
+			<arg value="sscm checkout ${artifact}.${artifact_type} -b${parent_scm} -p${parent_scm}/${repository}/${env}/${todaydate}/${type} -c- -y${scmusername}:${scmpassword} -z${server}"/>
+		</exec>
+	</target>
+
+	<target name="checkin">
+		<exec executable="bash"  dir="/hidapp_build/u01/SurroundSCM/" osfamily="unix" failonerror="true">
+			<arg value="-c"/>
+			<arg value="sscm checkin ${artifact}.${artifact_type} -b${parent_scm} -p${parent_scm}/${repository}/${env}/${todaydate}/${type} -c- -y${scmusername}:${scmpassword} -z${server}"/>
+		</exec>
+	</target>
+
+	<target name="get">
+		<exec executable="bash" osfamily="unix" failonerror="true">
+			<arg value="-c"/>
+			<arg value="sscm get / -b${branch} -p${parent_scm}/${coderepository}/${repository_name} -d. -e -r -y${scmusername}:${scmpassword} -z${server} -wskip "/>
+		</exec>
+	</target>
+	
+	<target name="getlabel">
+		<exec executable="bash" osfamily="unix" failonerror="true">
+			<arg value="-c"/>
+			<arg value="sscm get / -b${branch} -p${parent_scm}/${coderepository}/${repository_name} -d. -l${label} -e -r -wskip -y${scmusername}:${scmpassword} -z${server}"/>
+		</exec>
+	</target>
+
+	<target name="parentget">
+       	 	<if>
+       			<available file="${parent}/${env}/${todaydate}" type="dir"/>
+			<then> 
+				<echo message="#####${todaydate} exist,SCM get task is being performed for ${todaydate}  #####"/>
+				<exec executable="bash" dir="/hidapp_build/u01/SurroundSCM/" osfamily="unix" failonerror="true">
+           	 		<arg value="-c"/>
+		 			<arg value="sscm get ${todaydate} -b${parent_scm} -p${parent_scm}/${repository}/${env} -r -e -wreplace -y${scmusername}:${scmpassword} -z${server}"/>
+       	 		</exec>
+			</then>
+			<else>
+				<echo message="#####${todaydate} does not exist,Thus SCM get task in target parentgetget is skipped#####"/>
+			</else>	
+   		</if> 
+   	 </target>
+
+	<target name="artifact_copy">
+		<copy file="dist/${artifact}.${artifact_type}" todir="${parent}/${env}/${todaydate}/${type}" overwrite="true"/>
+	</target>
+	
+	
+	
+	<!-- Artifact Checkin,Checkout,Add in SCM -->
+	<target name="scm">
+        	<echo message="#####Get Latest ${repository} From SCM#####"/>
+        	<antcall target="parentget"/>
+        	<if>
+				<available file="${parent}/${env}/${todaydate}" type="dir"/>
+				<then>
+					<if>
+						<available file="${parent}/${env}/${todaydate}/${type}" type="dir"/>
+                        <then>
+                            <if>
+								<available file="${parent}/${env}/${todaydate}/${type}/${artifact}.${artifact_type}" type="file"/>
+                                <then>
+                                    <echo message="#####File ${artifact}.${artifact_type} exists#####"/>
+                                    <echo message="#####Checking out the file ${artifact}.${artifact_type} from SCM#####"/>
+                                    <antcall target="checkout"/>
+                                    <echo message="#####copying ${artifact}.${artifact_type}#####"/>
+                                    <antcall target="artifact_copy"/>
+									<echo message="#####checking in the file ${artifact}.${artifact_type}#####"/>
+                                    <antcall target="checkin"/>                                                                                                                    
+								</then>
+                                <else>
+                                    <echo message="#####File ${artifact}.${artifact_type} not exits#####"/>
+                                    <echo message="#####copying ${artifact}.${artifact_type}#####"/>
+                                    <antcall target="artifact_copy"/>
+                                    <echo message="#####Adding ${artifact}.${artifact_type}#####"/>
+                                    <antcall target="add"/>
+                                </else>
+                            </if>
+						</then>
+                        <else>
+                            <echo message="#####${type} directory does not exist for parent folder ${todaydate}#####"/>
+                            <echo message="#####Creating ${type} repository under parent repository ${todaydate}#####"/>
+                            <mkdir dir="${parent}/${env}/${todaydate}/${type}"/>
+                            <antcall target="createsubrepo"/>
+							<echo message="#####copying ${artifact}.${artifact_type}#####"/>
+                            <antcall target="artifact_copy"/>
+                            <echo message="#####Adding ${artifact}.${artifact_type}#####"/>
+                            <antcall target="add"/>
+                        </else>
+					</if>
+				</then>
+				<else>
+					<echo message="#####${todaydate} does not exist#####"/>
+					<echo message="#####Creating repository ${todaydate} under parent ${env}#####"/>
+					<mkdir dir="${parent}/${env}/${todaydate}"/>
+					<antcall target="createdaterepo" inheritAll="true"/>
+					<echo message="#####Creating ${type} repository under parent repository ${todaydate}#####"/>
+					<mkdir dir="${parent}/${env}/${todaydate}/${type}"/>
+					<antcall target="createsubrepo"/>
+					<echo message="#####copying ${artifact}.${artifact_type}#####"/>
+					<antcall target="artifact_copy"/>
+					<echo message="#####Adding ${artifact}.${artifact_type}#####"/>
+					<antcall target="add"/>
+				</else>
+        	</if>
+   	</target>
+
+<target name="stop">
+        <exec executable="/hidapp_build/middleware/fmw_home/oracle_common/common/bin/wlst.sh"  osfamily="unix" failonerror="true">
+            	<arg value="./stop.py" />
+				<arg value="${username}"/>
+				<arg value="${password}"/>
+				<arg value="${adminurl}"/>
+        </exec>
+	</target>
+
+	<target name="start">
+        <exec executable="/hidapp_build/middleware/fmw_home/oracle_common/common/bin/wlst.sh"  osfamily="unix" failonerror="true">
+            	<arg value="./start.py" />
+				<arg value="${username}"/>
+				<arg value="${password}"/>
+				<arg value="${adminurl}"/>
+        </exec>
+	</target>
+
+</project>
+
