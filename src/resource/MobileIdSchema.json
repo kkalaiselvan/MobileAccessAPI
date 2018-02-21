@@ -1,0 +1,88 @@
+{
+    "id": "urn:hid:scim:api:ma:1.0:Credential",
+    "name": "User Credential",
+    "description": "Mobile Access Credential-Container's Credential",
+    "attributes": [
+        {
+            "name": "id",
+            "type": "integer",
+            "multiValued": false,
+            "description": "The internal id (Unique) to lookup the Credential which is of type INTEGER.",
+            "required": false,
+            "caseExact": true,
+            "mutability": "readOnly",
+            "returned": "default",
+            "uniqueness": "global"
+        },
+        {
+            "name": "partNumber",
+            "type": "string",
+            "multiValued": false,
+            "description": "Credential binded part number",
+            "required": false,
+            "caseExact": true,
+            "mutability": "readOnly",
+            "returned": "default",
+            "uniqueness": "none"
+        },
+        {
+            "name": "partnumberFriendlyName",
+            "type": "string",
+            "multiValued": false,
+            "description": "Friendly Name associated to Credential's part number",
+            "required": false,
+            "caseExact": true,
+            "mutability": "readOnly",
+            "returned": "default",
+            "uniqueness": "none"
+        },
+        {
+            "name": "cardNumber",
+            "type": "integer",
+            "multiValued": false,
+            "description": "Credential card number",
+            "required": false,
+            "caseExact": true,
+            "mutability": "readOnly",
+            "returned": "default",
+            "uniqueness": "none"
+        },
+        {
+            "name": "referenceNumber",
+            "type": "string",
+            "multiValued": false,
+            "description": "Credential Reference number",
+            "required": false,
+            "caseExact": true,
+            "mutability": "readOnly",
+            "returned": "default",
+            "uniqueness": "none"
+        },
+        {
+            "name": "credentialType",
+            "type": "string",
+            "multiValued": false,
+            "description": "Credential  Type",
+            "required": false,
+            "caseExact": true,
+            "mutability": "readOnly",
+            "returned": "default",
+            "uniqueness": "none"
+        },
+        {
+            "name": "status",
+            "type": "string",
+            "multiValued": false,
+            "description": "Represents the current status of an User's Credential-Container",
+            "required": false,
+            "caseExact": true,
+            "mutability": "readOnly",
+            "returned": "default",
+            "uniqueness": "none"
+        }
+    ],
+    "meta": {
+        "resourceType": "Schema",
+        "location": "http://usboss-devportal/credential-management/customer/{customer_id}/schemas/urn:hid:scim:api:ma:1.0:Credential"
+    }
+}

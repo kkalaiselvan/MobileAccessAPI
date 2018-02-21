@@ -1,0 +1,66 @@
+{
+    "id": "urn:hid:scim:api:ma:1.0:UserInvitation",
+    "name": "Invitation",
+    "description": "Mobile Access Invitation",
+    "attributes": [
+        {
+            "name": "id",
+            "type": "integer",
+            "multiValued": false,
+            "description": "Unique identifier for the Invitations directly identified by the Service Provider.",
+            "required": true,
+            "caseExact": true,
+            "mutability": "readOnly",
+            "returned": "always",
+            "uniqueness": "global"
+        },
+        {
+            "name": "invitationCode",
+            "type": "string",
+            "multiValued": false,
+            "description": "Code is represented in blocks of 4 sepaerated by a \"-\". Each block contains 4 alphanumeric characters",
+            "required": false,
+            "caseExact": true,
+            "mutability": "readOnly",
+            "returned": "default",
+            "uniqueness": "Global"
+        },
+        {
+            "name": "createdDate",
+            "type": "dateTime ",
+            "multiValued": false,
+            "description": "Date and Time on which the Invitation is created. Represented in UTC Format",
+            "required": false,
+            "caseExact": true,
+            "mutability": "readOnly",
+            "returned": "default",
+            "uniqueness": "none"
+        },
+        {
+            "name": "expirationDate",
+            "type": "dateTime ",
+            "multiValued": false,
+            "description": "Invitation code expiration Date and Time. Represented in UTC Format",
+            "required": false,
+            "caseExact": true,
+            "mutability": "readOnly",
+            "returned": "default",
+            "uniqueness": "none"
+        },
+        {
+            "name": "status",
+            "type": "string",
+            "multiValued": false,
+            "description": "Represents the current status of an InvitationCode",
+            "required": false,
+            "caseExact": true,
+            "mutability": "readOnly",
+            "returned": "default",
+            "uniqueness": "none"
+        }
+    ],
+    "meta": {
+        "resourceType": "Schema",
+        "location": "http://usboss-devportal/credential-management/customer/{customer_id}/schemas/urn:hid:scim:api:ma:1.0:UserInvitation"
+    }
+}

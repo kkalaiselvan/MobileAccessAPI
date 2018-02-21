@@ -1,0 +1,6 @@
+SCMBranch=SIS_4_2_0_MobileAccess_API_Release
+SCMRepository=HID Eng - Boston Software/middleware/mobileaccess/api/MobileAccessAPI/src
+SCMMainlineUUID={63c0b8f1-c934-489e-93ef-37c456a8d019}
+SCMBranchRepositoryID=45023
+applicationContext.xml;485911860;1;1468308353;|44531|93494
+log4j.xml;1928972303;1;1444047666;|44532|75476

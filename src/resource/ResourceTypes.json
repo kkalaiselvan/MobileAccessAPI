@@ -1,0 +1,134 @@
+{
+
+    "totalResults": 8,
+    "itemsPerPage": 8,
+    "startIndex": 1,
+    "schemas": [
+        "urn:ietf:params:scim:api:messages:2.0:ListResponse"
+    ],
+    "Resources": [
+        {
+            "schemas": [
+                "urn:ietf:params:scim:schemas:core:2.0:ResourceType"
+            ],
+            "id": "PACSUser",
+            "name": "PACSUser",
+            "endpoint": "/users",
+            "description": "Mobile Access Users",
+            "schema": "urn:ietf:params:scim:schemas:core:2.0:User",
+            "schemaExtensions": [
+                {
+                    "schema": "urn:hid:scim:api:ma:1.0:UserAction",
+                    "required": false
+                }
+            ],
+            "meta": {
+                "location": "http://usboss-devportal/credential-management/customer/{customer_id}/users/{user_id}",
+                "resourceType": "ResourceType"
+            }     
+        },
+        {
+            "schemas": [
+                "urn:ietf:params:scim:schemas:core:2.0:ResourceType"
+            ],
+            "id": "UserInvitation",
+            "name": "UserInvitation",
+            "endpoint": "/invitation",
+            "description": "Mobile Access User Invitation",
+            "schema": "urn:hid:scim:api:ma:1.0:UserInvitation",
+            "schemaExtensions": [
+                {
+                    "schema": "urn:hid:scim:api:ma:1.0:UserAction",
+                    "required": false
+                }
+            ],
+            "meta": {
+                "location": "http://usboss-devportal/credential-management/customer/{customer_id}/invitation/{invitation_id}",
+                "resourceType": "ResourceType"
+            }
+        },
+        {
+            "schemas": [
+                "urn:ietf:params:scim:schemas:core:2.0:ResourceType"
+            ],
+            "id": "PartNumber",
+            "name": "PartNumber",
+            "endpoint": "/part-number",
+            "description": "Part Number",
+            "schema": "urn:hid:scim:api:ma:1.0:PartNumber",
+            "meta": {
+                "location": "http://usboss-devportal/credential-management/customer/{customer_id}/part-number/{partnumber_id}",
+                "resourceType": "ResourceType"
+            }
+        },
+        {
+            "schemas": [
+                "urn:ietf:params:scim:schemas:core:2.0:ResourceType"
+            ],
+            "id": "UserCredential",
+            "name": "UserCredential",
+            "endpoint": "/credential",
+            "description": "Mobile Access User Credential",
+            "schema": "urn:hid:scim:api:ma:1.0:Credential",
+             "schemaExtensions": [
+                {
+                    "schema": "urn:hid:scim:api:ma:1.0:UserAction",
+                    "required": false
+                }
+            ],
+            "meta": {
+                "location": "http://usboss-devportal/credential-management/customer/{customer_id}/credential/{credential_id}",
+                "resourceType": "ResourceType"
+            }
+        },
+        {
+            "schemas": [
+                "urn:ietf:params:scim:schemas:core:2.0:ResourceType"
+            ],
+            "id": "UserCredentialContainer",
+            "name": "UserCredentialContainer",
+            "endpoint": "/credential-container",
+            "description": "Mobile Access User Credential Container",
+            "schema": "urn:hid:scim:api:ma:1.0:CredentialContainer",
+            "meta": {
+                "location": "http://usboss-devportal/credential-management/customer/{customer_id}/credential-container/{credentialcontainer_id}",
+                "resourceType": "ResourceType"
+            }
+        },
+       {
+         "schemas": ["urn:ietf:params:scim:schemas:core:2.0:ResourceType"],
+         "id": "Notification",
+         "name": "Notification",
+         "description": "Callback Service Notification",
+         "schema": "urn:hid:scim:api:ma:1.0:Notification",
+         "meta": {
+           
+            "resourceType": "ResourceType"
+         }
+      },
+{
+         "schemas": ["urn:ietf:params:scim:schemas:core:2.0:ResourceType"],
+         "id": "SDK Version",
+         "name": "SDK Version",
+         "endpoint": "/sdk-version",
+         "description": "Version of the SDK",
+         "schema": "urn:hid:scim:api:ma:1.0:SDKVersion",
+         "meta":          {
+            "location": "http://usboss-devportal/credential-management/customer/{customer_id}/sdk-version",
+            "resourceType": "ResourceType"
+         }
+      }, 
+            {
+         "schemas": ["urn:ietf:params:scim:schemas:core:2.0:ResourceType"],
+         "id": "CallbackRegistration",
+         "name": "CallbackRegistration",
+         "endpoint": "/callback-registration",
+         "description": "Mobile Access Callback Registration",
+         "schema": "urn:hid:scim:api:ma:1.0:CallbackRegistration",
+         "meta": {
+            "location": "http://usboss-devportal/credential-management/customer/{customer_id}/callback-registration/{callback_registration_id}",
+            "resourceType": "ResourceType"
+         }
+      }  
+    ]
+}

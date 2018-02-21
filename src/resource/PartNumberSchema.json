@@ -1,0 +1,66 @@
+{
+    "id": "urn:hid:scim:api:ma:1.0:PartNumber",
+    "name": "Part Number",
+    "description": "Mobile Access Part Number",
+    "attributes": [
+        {
+            "name": "id",
+            "type": "integer",
+            "multiValued": false,
+            "description": "Part number unique ID ",
+            "required": true,
+            "caseExact": true,
+            "mutability": "readOnly",
+            "returned": "default",
+            "uniqueness": "global"
+        },
+        {
+            "name": "partNumber",
+            "type": "string",
+            "multiValued": false,
+            "description": "Credentials Binded to part number",
+            "required": false,
+            "caseExact": true,
+            "mutability": "readOnly",
+            "returned": "default",
+            "uniqueness": "none"
+        },
+        {
+            "name": "friendlyName",
+            "type": "string",
+            "multiValued": false,
+            "description": "Friendly Name associated to  part number",
+            "required": false,
+            "caseExact": true,
+            "mutability": "readOnly",
+            "returned": "default",
+            "uniqueness": "none"
+        },
+        {
+            "name": "description",
+            "type": "string",
+            "multiValued": false,
+            "description": "Description of Part number",
+            "required": false,
+            "caseExact": true,
+            "mutability": "readOnly",
+            "returned": "default",
+            "uniqueness": "none"
+        },
+		 {
+            "name": "availableQty",
+            "type": "integer",
+            "multiValued": false,
+            "description": "Available Credential  for that partNumber",
+            "required": false,
+            "caseExact": true,
+            "mutability": "readOnly",
+            "returned": "default",
+            "uniqueness": "none"
+        }
+    ],
+    "meta": {
+        "resourceType": "Schema",
+        "location": "http://usboss-devportal/credential-management/customer/{customer_id}/schemas/urn:hid:scim:api:ma:1.0:PartNumber"
+    }
+}

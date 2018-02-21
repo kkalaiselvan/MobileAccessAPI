@@ -1,0 +1,68 @@
+{
+    "id": "urn:hid:scim:api:ma:1.0:UserAction",
+    "name": "User Action",
+    "attributes": [
+        {
+            "name": "createInvitationCode",
+            "type": "string",
+            "multiValued": false,
+            "description": "Creates Invitation Code. Values Y/N",
+            "required": false,
+            "canonicalValues" : ["y", "n" ],
+            "caseExact": false,
+            "mutability": "writeOnly",
+            "returned": "never",
+            "uniqueness": "none"
+        },
+        {
+            "name": "sendInvitationEmail",
+            "type": "string",
+            "multiValued": false,
+            "description": "Sends Email on creating invitation. Values Y/N",
+            "required": false,
+            "canonicalValues" : ["y", "n" ],
+            "caseExact": false,
+            "mutability": "writeOnly",
+            "returned": "never",
+            "uniqueness": "none"
+        },
+        {
+            "name": "assignCredential",
+            "type": "string",
+            "multiValued": false,
+            "description": "Assign Credential. Values Y/N",
+            "required": false,
+            "canonicalValues" : ["y", "n"],
+            "caseExact": false,
+            "mutability": "writeOnly",
+            "returned": "never",
+            "uniqueness": "none"
+        },
+        {
+            "name": "partNumber",
+            "type": "string",
+            "multiValued": false,
+            "description": "Part Number for issuing the Credential",
+            "required": false,
+            "caseExact": true,
+            "mutability": "writeOnly",
+            "returned": "never",
+            "uniqueness": "none"
+        },
+        {
+            "name": "credential",
+            "type": "integer",
+            "multiValued": false,
+            "description": "Issue the provided Mobile Id to the Credential-Container",
+            "required": false,
+            "caseExact": true,
+            "mutability": "writeOnly",
+            "returned": "never",
+            "uniqueness": "none"
+        }
+    ],
+    "meta": {
+        "resourceType": "Schema",
+        "location": "http://usboss-devportal/credential-management/customer/{customer_id}/schemas/urn:hid:scim:api:ma:1.0:UserAction"
+    }
+}

@@ -1,0 +1,104 @@
+{
+    "id": "urn:ietf:params:scim:schemas:core:2.0:User",
+    "name": "User",
+    "description": "Mobile Access User",
+    "attributes": [
+        {
+            "name": "id",
+            "type": "integer",
+            "multiValued": false,
+            "description": "Unique identifier for the User typically used by the user to directly identified by the Service Provider.",
+            "required": false,
+            "caseExact": true,
+            "mutability": "readOnly",
+            "returned": "always",
+            "uniqueness": "global"
+        },
+        {
+            "name": "externalId",
+            "type": "string",
+            "multiValued": false,
+            "description": "This is provided by Service Consumer. This attribute will be used to uniquely identify the enrolled PACS user between consumer and HID systems.",
+            "required": true,
+            "caseExact": true ,
+            "mutability": "readWrite",
+            "returned": "default",
+            "uniqueness": "none"
+        },
+        {
+            "name": "name",
+            "type": "complex",
+            "multiValued": false,
+            "description": "The name of the User, suitable for display to end-users.",
+            "subattributes": [
+                {
+                    "name": "givenName ",
+                    "type": "string",
+                    "multiValued": false,
+                    "description": "A human readable name, primarily used for display purposes.",
+                    "required": true,
+                    "caseExact": true,
+                    "mutability": "readWrite",
+                    "returned": "default",
+                    "uniqueness": "none"
+                },
+                {
+                    "name": "familyName",
+                    "type": "string",
+                    "multiValued": false,
+                    "description": "A human readable name, primarily used for display purposes.",
+                    "required": true,
+                    "caseExact": true,
+                    "mutability": "readWrite",
+                    "returned": "default",
+                    "uniqueness": "none"
+                }
+            ],
+            "required": true,
+            "caseExact": true,
+            "mutability": "readWrite",
+            "returned": "request",
+            "uniqueness": "none"
+        },
+        {
+            "name": "emails",
+            "type": "complex",
+            "multiValued": true,
+            "description": "E-mail addresses for the user.",
+            "subAttributes": [
+                {
+                    "name": "value",
+                    "type": "string",
+                    "multiValued": false,
+                    "description": "E-mail addresses for the user.",
+                    "required": true,
+                    "caseExact": true,
+                    "mutability": "readWrite",
+                    "returned": "default",
+                    "uniqueness": "global"
+                }
+            ],
+            "required": true,
+            "caseExact": true,
+            "mutability": "readWrite",
+            "returned": "default",
+            "uniqueness": "global"
+        },
+        {
+            "name": "urn:hid:scim:api:ma:1.0:UserAction",
+            "type": "reference",
+            "referenceTypes": "urn:hid:scim:api:ma:1.0:UserAction",
+            "multiValued": true,
+            "description": "User Extension to Create Invitation/ Issue Credential while enrolling user",
+            "required": false,
+            "caseExact": true,
+            "mutability": "writeOnly",
+            "returned": "never",
+            "uniqueness": "none"
+        }
+    ],
+    "meta": {
+        "resourceType": "Schema",
+        "location": "http://usboss-devportal/credential-management/customer/{customer_id}/schemas/urn:ietf:params:scim:schemas:core:2.0:User"
+    }
+}

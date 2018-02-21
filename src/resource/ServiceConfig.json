@@ -1,0 +1,42 @@
+  {
+    "schemas": [
+      "urn:ietf:params:scim:schemas:core:2.0:ServiceProviderConfig"
+    ],
+    "documentationUri":"http://usboss-devportal/credential-management/customer/docs/help.html", 
+    "patch": {
+      "supported":false  
+    },
+    "bulk": {
+      "supported":false
+    },
+
+    "filter": {
+      "supported":true,
+      "maxResults": 25
+    },
+    "changePassword" : {
+      "supported":false
+    },
+    "sort": {
+      "supported":true
+    },
+    "etag": {
+      "supported":false 
+    },
+    "authenticationSchemes": [
+      {
+        "name": "OAuth Bearer Token",  
+        "description":
+        "Authentication Scheme using the OAuth Bearer Token Standard",
+        "type":"oauthbearertoken",
+        "primary": true
+      }
+    ],
+    "meta": {
+      "location":"http://usboss-devportal/credential-management/customer/{customer_id}/serviceProviderConfig",
+      "resourceType": "ServiceProviderConfig",
+      "created": "2015-08-23T04:56:22Z",
+      "lastModified": "2015-11-19T04:42:34Z"
+   
+    }
+  }

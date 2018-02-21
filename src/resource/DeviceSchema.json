@@ -1,0 +1,122 @@
+{
+    "id": "urn:hid:scim:api:ma:1.0:CredentialContainer",
+    "name": "User Credential Container",
+    "description": "Mobile Access Credential Container",
+    "attributes": [
+        {
+            "name": "id",
+            "type": "integer",
+            "multiValued": false,
+            "description": "The internal id (Unique) to lookup the User's Credential-Container which is of type INTEGER.",
+            "required": true,
+            "caseExact": true,
+            "mutability": "readOnly",
+            "returned": "default",
+            "uniqueness": "global"
+        },
+        {
+            "name": "osVersion",
+            "type": "string",
+            "multiValued": false,
+            "description": "Registered Credential-Container's Operating system version",
+            "required": false,
+            "caseExact": true,
+            "mutability": "readOnly",
+            "returned": "default",
+            "uniqueness": "none"
+        },
+        {
+            "name": "secureElementType",
+            "type": "string",
+            "multiValued": false,
+            "description": "Description Required",
+            "required": false,
+            "caseExact": true,
+            "mutability": "readOnly",
+            "returned": "default",
+            "uniqueness": "none"
+        },
+        {
+         "name": "manufacturer",
+         "type": "string",
+         "multiValued": false,
+         "description": "The Manufacturer of the Credential-Container",
+         "required": false,
+         "caseExact": false,
+         "mutability": "readOnly",
+         "returned": "default",
+         "uniqueness": "none"
+      },
+        
+        {
+            "name": "model",
+            "type": "string",
+            "multiValued": false,
+            "description": "Registered Credential-Container Model",
+            "required": false,
+            "caseExact": true,
+            "mutability": "readOnly",
+            "returned": "default",
+            "uniqueness": "none"
+        },
+        {
+            "name": "applicationVersion",
+            "type": "string",
+            "multiValued": false,
+            "description": "HID Mobile Access application version running on the Credential-Container",
+            "required": false,
+            "caseExact": true,
+            "mutability": "readOnly",
+            "returned": "default",
+            "uniqueness": "none"
+        },
+        {
+            "name": "simOperator",
+            "type": "string",
+            "multiValued": false,
+            "description": "Credential-Container's Subscriber Identity Module provider",
+            "required": false,
+            "caseExact": true,
+            "mutability": "readOnly",
+            "returned": "default",
+            "uniqueness": "none"
+        },
+        {
+            "name": "bluetoothCapability",
+            "type": "string",
+            "multiValued": false,
+            "description": "Credential-Container is capable of bluetooth [Y/N]",
+            "required": false,
+            "caseExact": true,
+            "mutability": "readOnly",
+            "returned": "default",
+            "uniqueness": "none"
+        },
+        {
+            "name": "nfcCapability",
+            "type": "string",
+            "multiValued": false,
+            "description": "Credential-Container is capable of NFC [Y/N]",
+            "required": false,
+            "caseExact": true,
+            "mutability": "readOnly",
+            "returned": "default",
+            "uniqueness": "none"
+        },
+        {
+            "name": "status",
+            "type": "string",
+            "multiValued": false,
+            "description": "Represents the current status of an User Credential Container",
+            "required": false,
+            "caseExact": true,
+            "mutability": "readOnly",
+            "returned": "default",
+            "uniqueness": "none"
+        }
+    ],
+    "meta": {
+        "resourceType": "Schema",
+        "location": "http://usboss-devportal/credential-management/customer/{customer_id}/schemas/urn:hid:scim:api:ma:1.0:CredentialContainer"
+    }
+}

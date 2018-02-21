@@ -1,0 +1,22 @@
+{
+   "id": "urn:hid:scim:api:ma:1.0:SDKVersion",
+   "name": "SDK Version",
+   "description": "version of the SDK",
+   "attributes":    [
+            {
+         "name": "version",
+         "type": "string",
+         "multiValued": false,
+         "description": "SDK Version",
+         "required": false,
+         "caseExact": false,
+         "mutability": "readOnly",
+         "returned": "default",
+         "uniqueness": "none"
+      }
+    ],
+   "meta":    {
+      "resourceType": "Schema",
+      "location": "http://usboss-devportal/credential-management/customer/{customer_id}/schemas/urn:hid:scim:api:ma:1.0:SDKVersion"
+   }
+}

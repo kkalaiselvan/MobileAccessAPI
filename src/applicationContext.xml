@@ -1,0 +1,173 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:oxm="http://www.springframework.org/schema/oxm"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	  http://www.springframework.org/schema/tx 
+     http://www.springframework.org/schema/tx/spring-tx.xsd
+     http://www.springframework.org/schema/oxm
+     http://www.springframework.org/schema/oxm/spring-oxm.xsd
+      http://www.springframework.org/schema/util
+     http://www.springframework.org/schema/util/spring-util.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<context:component-scan base-package="com.hidglobal.managedservices" />
+
+	<tx:annotation-driven />
+
+	<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" value="jdbc/mssoa" />
+	</bean>
+
+	<tx:jta-transaction-manager />
+	<bean id="jdbcTemplateObject" class="org.springframework.jdbc.core.JdbcTemplate">
+		<constructor-arg ref="dataSource" />
+	</bean>
+
+	<bean id="sqlCodesHttpCodesMap"
+		class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="location" value="classpath:sqlCodesHttpCodesMap.properties" />
+	</bean>
+
+	<bean id="dbColumnMap"
+		class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="location" value="classpath:dbcolumnmap.properties" />
+	</bean>
+
+	<bean id="pacsUserAttrToSqlColumnMap"
+		class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="location"
+			value="classpath:pacsUserSCIMAttrToSqlColumnMap.properties" />
+	</bean>
+
+	<bean id="invitationAttrToSqlColumnMap"
+		class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="location"
+			value="classpath:invitationAttrToSqlColumnMap.properties" />
+	</bean>
+
+	<bean id="partNoAttrToSqlColumnMap"
+		class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="location"
+			value="classpath:partNoAttrToSqlColumnMap.properties" />
+	</bean>
+
+	<bean id="mobileIdAttrToSqlColumnMap"
+		class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="location"
+			value="classpath:mobileIdAttrToSqlColumnMap.properties" />
+	</bean>
+	<bean id="deviceAttrToSqlColumnMap"
+		class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="location"
+			value="classpath:deviceAttrToSqlColumnMap.properties" />
+	</bean>
+
+	<bean id="deviceMobileIdAttrToSqlColumnMap"
+		class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="location"
+			value="classpath:deviceMobileIdAttrToSqlColumnMap.properties" />
+	</bean>
+
+	<bean id="scimOperatorsSqlColumnMap"
+		class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="location" value="classpath:scimOpToSqlOpMap.properties" />
+	</bean>
+
+	<bean id="resourceLocation"
+		class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="location" value="classpath:resourceLocation.properties" />
+	</bean>
+
+	<bean id="serviceProviderConfigResource" class="org.springframework.core.io.ClassPathResource">
+		<constructor-arg type="java.lang.String" value="ServiceConfig.json" />
+	</bean>
+
+	<bean id="resourceTypeResource" class="org.springframework.core.io.ClassPathResource">
+		<constructor-arg type="java.lang.String" value="ResourceTypes.json" />
+	</bean>
+	<bean id="userSchema" class="org.springframework.core.io.ClassPathResource">
+		<constructor-arg type="java.lang.String" value="UserSchema.json" />
+	</bean>
+	<bean id="invitationSchema" class="org.springframework.core.io.ClassPathResource">
+		<constructor-arg type="java.lang.String" value="InvitationSchema.json" />
+	</bean>
+	<bean id="deviceSchema" class="org.springframework.core.io.ClassPathResource">
+		<constructor-arg type="java.lang.String" value="DeviceSchema.json" />
+	</bean>
+	<bean id="mobileIdSchema" class="org.springframework.core.io.ClassPathResource">
+		<constructor-arg type="java.lang.String" value="MobileIdSchema.json" />
+	</bean>
+	<bean id="partNumberSchema" class="org.springframework.core.io.ClassPathResource">
+		<constructor-arg type="java.lang.String" value="PartNumberSchema.json" />
+	</bean>
+	<bean id="userActionSchema" class="org.springframework.core.io.ClassPathResource">
+		<constructor-arg type="java.lang.String" value="UserActionSchema.json" />
+	</bean>
+	<bean id="versionSchema" class="org.springframework.core.io.ClassPathResource">
+		<constructor-arg type="java.lang.String" value="VersionSchema.json" />
+	</bean>
+	<bean id="registrationSchema" class="org.springframework.core.io.ClassPathResource">
+		<constructor-arg type="java.lang.String" value="CallBackRegistrationSchema.json" />
+	</bean>
+	<bean id="notificationSchema" class="org.springframework.core.io.ClassPathResource">
+		<constructor-arg type="java.lang.String" value="NotificationSchema.json" />
+	</bean>
+	<bean id="searchAttributes"
+		class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="location" value="classpath:searchAttribute.properties" />
+	</bean>
+	<bean id="filterAttributes"
+		class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="location" value="classpath:filterColumn.properties" />
+	</bean>	
+	<bean id="columnSQlFunctions"
+		class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="location" value="classpath:columnSQlFunctionsMap.properties" />
+	</bean>
+	<!-- <bean id="maValidator" class="com.hidglobal.managedservices.validator.MAValidator"> 
+		</bean> -->
+
+	<bean id="messageSource"
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="defaultEncoding" value="UTF-8" />
+		<property name="basenames">
+			<list>
+				<value>classpath:messages_en</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="messageFactory" class="org.springframework.ws.soap.saaj.SaajSoapMessageFactory" />
+
+	<bean id="marshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+		<property name="contextPaths">
+			<list>
+				<value>com.hidglobal.base</value>
+				<value>com.hidglobal.managedservices.mobileaccess</value>
+				<value>com.hidglobal.version</value>
+			</list>
+		</property>
+
+	</bean>
+
+
+	<oxm:jaxb2-marshaller id="unmarshaller">
+		<oxm:class-to-be-bound
+			name="com.hidglobal.managedservices.mobileaccess.CreateInvitationRequestType" />
+		<oxm:class-to-be-bound
+			name="com.hidglobal.managedservices.mobileaccess.CreateInvitationResponseType" />
+	</oxm:jaxb2-marshaller>
+
+	<bean id="webServiceTemplate" class="org.springframework.ws.client.core.WebServiceTemplate">
+		<constructor-arg ref="messageFactory" />
+		<property name="marshaller" ref="marshaller"></property>
+		<property name="unmarshaller" ref="unmarshaller"></property>
+		<property name="messageSender">
+			<bean
+				class="org.springframework.ws.transport.http.HttpComponentsMessageSender" />
+		</property>
+	</bean>
+</beans>

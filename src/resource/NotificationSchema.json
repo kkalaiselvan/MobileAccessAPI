@@ -1,0 +1,170 @@
+{
+	"id": "urn:hid:scim:api:ma:1.0:Notification",
+	"name": "Notification",
+	"description": "Subscriber Notification",
+	"attributes": [{
+		"name": "pacsUsers",
+		"type": "complex",
+		"multiValued": false,
+		"description": "User Status Details",
+		"required": false,
+		"subAttributes": [{
+			"name": "id",
+			"type": "string",
+			"multiValued": false,
+			"description": "User ID",
+			"required": false,
+			"caseExact": false,
+			"mutability": "readOnly",
+			"returned": "default",
+			"uniqueness": "none"
+		}, {
+			"name": "status",
+			"type": "string",
+			"multiValued": false,
+			"description": "User Status",
+			"required": false,
+			"caseExact": false,
+			"mutability": "readOnly",
+			"returned": "default",
+			"uniqueness": "none"
+		}, {
+			"name": "timestamp",
+			"type": "dateTime ",
+			"multiValued": false,
+			"description": "Date and Time on which the User is deleted. Represented in UTC Format",
+			"required": false,
+			"caseExact": true,
+			"mutability": "readOnly",
+			"returned": "default",
+			"uniqueness": "none"
+		}],
+		"mutability": "readOnly",
+		"returned": "default",
+		"uniqueness": "none"
+	}, {
+		"name": "invitations",
+		"type": "complex",
+		"multiValued": false,
+		"description": "Invitation Status Details",
+		"required": false,
+		"subAttributes": [{
+			"name": "id",
+			"type": "string",
+			"multiValued": false,
+			"description": "AAMK Invitation ID",
+			"required": false,
+			"caseExact": false,
+			"mutability": "readOnly",
+			"returned": "default",
+			"uniqueness": "none"
+		}, {
+			"name": "status",
+			"type": "string",
+			"multiValued": false,
+			"description": "Invitation Status",
+			"required": false,
+			"caseExact": false,
+			"mutability": "readOnly",
+			"returned": "default",
+			"uniqueness": "none"
+		}, {
+			"name": "timestamp",
+			"type": "dateTime ",
+			"multiValued": false,
+			"description": "Date and Time on which the Invitation is registered or cancelled. Represented in UTC Format",
+			"required": false,
+			"caseExact": true,
+			"mutability": "readOnly",
+			"returned": "default",
+			"uniqueness": "none"
+		}],
+		"mutability": "readOnly",
+		"returned": "default",
+		"uniqueness": "none"
+	}, {
+		"name": "credentialContainers",
+		"type": "complex",
+		"multiValued": false,
+		"description": "Credential Container Status Details",
+		"required": false,
+		"subAttributes": [{
+			"name": "id",
+			"type": "string",
+			"multiValued": false,
+			"description": "Credential Container ID",
+			"required": false,
+			"caseExact": false,
+			"mutability": "readOnly",
+			"returned": "default",
+			"uniqueness": "none"
+		}, {
+			"name": "status",
+			"type": "string",
+			"multiValued": false,
+			"description": "Credential Container Status",
+			"required": false,
+			"caseExact": false,
+			"mutability": "readOnly",
+			"returned": "default",
+			"uniqueness": "none"
+		}, {
+			"name": "timestamp",
+			"type": "dateTime ",
+			"multiValued": false,
+			"description": "Date and Time on which the Credential container is registered. Represented in UTC Format",
+			"required": false,
+			"caseExact": true,
+			"mutability": "readOnly",
+			"returned": "default",
+			"uniqueness": "none"
+		}],
+		"mutability": "readOnly",
+		"returned": "default",
+		"uniqueness": "none"
+	}, {
+		"name": "credentials",
+		"type": "complex",
+		"multiValued": false,
+		"description": "Credential Status Details",
+		"required": false,
+		"subAttributes": [{
+			"name": "id",
+			"type": "string",
+			"multiValued": false,
+			"description": "Credential Id",
+			"required": false,
+			"caseExact": false,
+			"mutability": "readOnly",
+			"returned": "default",
+			"uniqueness": "none"
+		}, {
+			"name": "status",
+			"type": "string",
+			"multiValued": false,
+			"description": "Credential Status",
+			"required": false,
+			"caseExact": false,
+			"mutability": "readOnly",
+			"returned": "default",
+			"uniqueness": "none"
+		}, {
+			"name": "timestamp",
+			"type": "dateTime ",
+			"multiValued": false,
+			"description": "Date and Time on which the Credential is issued or revoked. Represented in UTC Format",
+			"required": false,
+			"caseExact": true,
+			"mutability": "readOnly",
+			"returned": "default",
+			"uniqueness": "none"
+		}],
+		"mutability": "readOnly",
+		"returned": "default",
+		"uniqueness": "none"
+	}],
+	"meta": {
+		"resourceType": "Schema",
+		"location": "http://usboss-devportal/credential-management/customer/{customer_id}/schemas/urn:hid:scim:api:ma:1.0:Notification"
+	}
+}
